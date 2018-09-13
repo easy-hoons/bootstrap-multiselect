@@ -733,7 +733,7 @@
 
             // Keyboard support.
             this.$container.off('keydown.multiselect').on('keydown.multiselect', $.proxy(function(event) {
-                if ($('input[type="text"]', this.$container).is(':focus')) {
+                if ($('input[type="text"]', this.$container).is(':focus') && event.keyCode !== 40) {
                     return;
                 }
 
@@ -752,6 +752,10 @@
                     // Navigation up.
                     if (event.keyCode === 38 && index > 0) {
                         index--;
+                    }
+                    else if (event.keyCode === 38 && index === 0 && this.options.enableFiltering) {
+                        $('input[type="text"]', this.$container).focus();
+                        index = undefined;
                     }
                     // Navigate down.
                     else if (event.keyCode === 40 && index < $items.length - 1) {
