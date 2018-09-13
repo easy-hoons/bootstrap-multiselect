@@ -276,9 +276,9 @@
                     var selected = '';
                     var delimiter = this.delimiterText;
 
+                    var that = this;
                     options.each(function() {
-                        var label = ($(this).attr('label') !== undefined) ? $(this).attr('label') : $(this).text();
-                        selected += label + delimiter;
+                        selected += that.optionFullText($(this)) + delimiter;
                     });
 
                     return selected.substr(0, selected.length - this.delimiterText.length);
@@ -299,9 +299,9 @@
                     var selected = '';
                     var delimiter = this.delimiterText;
 
+                    var that = this;
                     options.each(function () {
-                        var label = ($(this).attr('label') !== undefined) ? $(this).attr('label') : $(this).text();
-                        selected += label + delimiter;
+                        selected += that.optionFullText($(this)) + delimiter;
                     });
                     return selected.substr(0, selected.length - this.delimiterText.length);
                 }
@@ -326,6 +326,15 @@
              */
             optionClass: function(element) {
                 return $(element).attr('class') || '';
+            },
+            /**
+             * Create the filter text.
+             *
+             * @param {jQuery} element
+             * @returns {String}
+             */
+            optionFullText: function(element){
+                return undefined;
             },
             /**
              * Triggered on change of the multiselect.
@@ -866,6 +875,7 @@
             // Support the label attribute on options.
             var label = this.options.optionLabel(element);
             var classes = this.options.optionClass(element);
+            var fullText = this.options.optionFullText(element);
             var value = $element.val();
             var inputType = this.options.multiple ? "checkbox" : "radio";
 
@@ -873,6 +883,7 @@
             var $label = $('label', $li);
             $label.addClass(inputType);
             $label.attr("title", label);
+            $label.attr("fullText", fullText);
             $li.addClass(classes);
 
             // Hide all children items when collapseOptGroupsByDefault is true
@@ -1111,9 +1122,13 @@
                                 $.each($('li', this.$ul), $.proxy(function(index, element) {
                                     var value = $('input', element).length > 0 ? $('input', element).val() : "";
                                     var text = $('label', element).text();
+                                    var fullText = $('label', element).attr('fullText');
 
                                     var filterCandidate = '';
-                                    if ((this.options.filterBehavior === 'text')) {
+                                    if (fullText) {
+                                        filterCandidate = fullText;
+                                    }
+                                    else if ((this.options.filterBehavior === 'text')) {
                                         filterCandidate = text;
                                     }
                                     else if ((this.options.filterBehavior === 'value')) {
