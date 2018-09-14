@@ -903,14 +903,16 @@
                 $li.hide();
             }
 
+            var $sublabel = $('.custom-control-label', $label);
             if (this.options.enableHTML) {
-                $label.html(" " + label);
+                $sublabel.html(" " + label);
             }
             else {
-                $label.text(" " + label);
+                $sublabel.text(" " + label);
             }
 
             var $checkbox = $('<input/>').attr('type', inputType);
+            $checkbox.addClass("custom-control-input");
             $checkbox.attr("tabIndex", "-1");
 
             var name = this.options.checkboxName($element);
@@ -1052,17 +1054,17 @@
                 $('label', $li).addClass("checkbox");
 
                 if (this.options.enableHTML) {
-                    $('label', $li).html(" " + this.options.selectAllText);
+                    $('.custom-control-label', $li).html(" " + this.options.selectAllText);
                 }
                 else {
-                    $('label', $li).text(" " + this.options.selectAllText);
+                    $('.custom-control-label', $li).text(" " + this.options.selectAllText);
                 }
 
                 if (this.options.selectAllName) {
-                    $('label', $li).prepend('<input type="checkbox" name="' + this.options.selectAllName + '" />');
+                    $('label', $li).prepend('<input type="checkbox" class="custom-control-input" tabIndex="-1" name="' + this.options.selectAllName + '" />');
                 }
                 else {
-                    $('label', $li).prepend('<input type="checkbox" />');
+                    $('label', $li).prepend('<input type="checkbox" class="custom-control-input" tabIndex="-1" />');
                 }
 
                 var $checkbox = $('input', $li);
