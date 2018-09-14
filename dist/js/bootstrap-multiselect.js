@@ -737,10 +737,10 @@
                     return;
                 }
 
-                if (event.keyCode === 9 && this.$container.hasClass('open')) {
-                    this.$button.click();
+                if (event.keyCode === 9) {
+                    return;
                 }
-                else {
+
                     var $items = $(this.$container).find("li:not(.divider):not(.disabled) a").filter(":visible");
 
                     if (!$items.length) {
@@ -777,7 +777,7 @@
 
                     event.stopPropagation();
                     event.preventDefault();
-                }
+
             }, this));
 
             if (this.options.enableClickableOptGroups && this.options.multiple) {
@@ -904,6 +904,7 @@
             }
 
             var $checkbox = $('<input/>').attr('type', inputType);
+            $checkbox.attr("tabIndex", "-1");
 
             var name = this.options.checkboxName($element);
             if (name) {
