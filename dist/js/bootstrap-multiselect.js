@@ -733,6 +733,13 @@
 
             // Keyboard support.
             this.$container.off('keydown.multiselect').on('keydown.multiselect', $.proxy(function(event) {
+
+                if (event.keyCode === 27 && this.$container.hasClass('show')) {
+                    this.$button.click();
+                    this.$button.focus();
+                    return;
+                }
+
                 if ($('input[type="text"]', this.$container).is(':focus') && event.keyCode !== 40) {
                     return;
                 }
